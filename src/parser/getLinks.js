@@ -10,6 +10,28 @@ export const getLinks = async () => {
     cheerioDataH2.each(function () {
         let tagA = $(this).children()
         let dayOfWeek = $(this).text().split(/[()]/)[1];
+
+        switch (dayOfWeek) {
+            case 'понедельник':
+                dayOfWeek = 'пн'
+                break;
+            case 'вторник':
+                dayOfWeek = 'вт'
+                break;
+            case 'среда':
+                dayOfWeek = 'ср'
+                break;
+            case 'четверг':
+                dayOfWeek = 'чт'
+                break;
+            case 'пятница':
+                dayOfWeek = 'пт'
+                break;
+            case 'суббота':
+                dayOfWeek = 'сб'
+                break;
+        }
+
         let date = $(this).text().split(' ').filter(value => (value.split('.').length === 3))[0]
         outputData.push({
             href: tagA.attr('href'),

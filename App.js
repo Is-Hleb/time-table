@@ -1,31 +1,31 @@
-import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {getLinks} from './src/parser/getLinks'
-import {getTimeTable} from "./src/parser/getTimetable";
+import {StyleSheet, Text, View} from 'react-native';
+import {Provider as PaperProvider, Button} from 'react-native-paper';
+import {theme} from "./src/frontend/Theme";
+import {Header} from './src/components/Header'
+import {getLinks, getTimetableByUrl} from "./src/storage/Storage";
+import NavBar from "./src/components/navbar/NavBar";
+
+const config = require('./config.json');
 
 export default function App() {
-
-    const parseData = async () => {
-        let data = await getLinks();
-        console.log(data)
-        await getTimeTable(data[0].href)
-    }
-
     return (
-        <View style={styles.container}>
-            <Text>Open up App.js to start working on your app!</Text>
-            <Button onPress={parseData} title="Парсить"/>
-            <StatusBar style="auto"/>
-        </View>
+        <PaperProvider theme={theme}>
+            <View style={styles.body}>
+                <Header title={config.appName}/>
+                <NavBar/>
+            </View>
+        </PaperProvider>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    body: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        height: '100%',
+        width: '100%',
+        justifyContent: 'flex-start',
+        backgroundColor: theme.colors.background,
     },
 });
