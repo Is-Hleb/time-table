@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomLeftRadius: 2,
         borderBottomRightRadius: 2,
-        backgroundColor: theme.colors.error,
+        backgroundColor: theme.colors.backgroundHeaderColor,
     },
     header_text: {
         marginTop: '7%',

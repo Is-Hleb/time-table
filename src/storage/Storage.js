@@ -14,10 +14,10 @@ export const getLinks = async () => {
 }
 
 export const getTimetableByUrl = async url => {
-    if (!await AsyncStorage.getItem(url)) {
-        let loaded_timetable = JSON.stringify(await ParseTimetable(url));
+    //if (!await AsyncStorage.getItem(url)) {
+       let loaded_timetable = JSON.stringify(await ParseTimetable(url));
         await AsyncStorage.setItem(url, loaded_timetable);
-    }
+    //}
     let data = await AsyncStorage.getItem(url);
     return JSON.parse(data)
 }

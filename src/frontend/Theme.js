@@ -62,8 +62,13 @@ export const theme = {
     ...DarkTheme,
     fonts: configureFonts(fontConfig),
     colors: {
-        ...DarkTheme.colors,
+        text: '#fae8da',
+        backgroundHeaderColor: '#9db3b4',
+        backgroundColor: '#344b52',
+        backgroundButton: '#587983',
+        backgroundButtonPressed: '#9db3b4',
+        navbarBackgroundColor: '#cfd3ca',
         primary: '#3498db',
-        border: '#b6b0b0',
-    }
+        border: '#686a77',
+    },
 };

@@ -1,28 +1,39 @@
-import React from "react";
-import {Button, StyleSheet, View} from "react-native";
+import React, {useState} from "react";
+import {Button, StyleSheet, Pressable} from "react-native";
 import {DarkTheme, Text} from "react-native-paper";
 import {theme} from "../../frontend/Theme";
 
-export const NavBarItem = ({title, href}) => {
-    console.log(title);
+export const NavBarItem = ({title, Press, active}) => {
+
     return (
-        <View style={styles.navbar_item}>
-            <Button style={styles.navbar_item_button} title={title}/>
-        </View>
+        <Pressable
+            style={({pressed}) => [
+                {backgroundColor: (pressed ? theme.colors.backgroundButtonPressed : theme.colors.backgroundButton)},
+                styles.button,
+                (active ? styles.selected : {})
+            ]}
+            onPress={Press}>
+            <Text style={styles.text}>{title}</Text>
+        </Pressable>
     )
 };
 
 const styles = StyleSheet.create({
-    navbar_item: {
-        width: '100%',
-        alignContent: 'center',
+    button: {
+        alignItems: 'center',
         justifyContent: 'center',
+        paddingVertical: '20%',
+        borderBottomColor: '#cfd3ca',
+        borderBottomWidth: 1,
     },
-    navbar_item_button: {
-        width: '100%',
-        height: '5%',
-        alignContent: 'center',
-        justifyContent: 'center',
-        paddingBottom: 40,
-    }
+    selected: {
+      backgroundColor: '#5c5f5c',
+    },
+    text: {
+        fontSize: 16,
+        lineHeight: 21,
+        letterSpacing: 0.25,
+        color: theme.colors.text,
+        ...theme.fonts.regular
+    },
 })
