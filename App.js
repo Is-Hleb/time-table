@@ -5,14 +5,47 @@ import {theme} from "./src/frontend/Theme";
 import Timetable from "./src/components/Timetable/Timetable";
 import {Header} from './src/components/Header'
 import NavBar from "./src/components/navbar/NavBar";
-import {getLinks, getTimetableByUrl} from "./src/storage/Storage";
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
+import {getLinks, uploadLinks} from "./src/storage/Storage";
 
 const config = require('./config.json');
+const BACKGROUND_FETCH_TASK = 'background_parse_data';
+
+TaskManager.defineTask(BACKGROUND_FETCH_TASK, () => {
+    try {
+        uploadLinks().then(() => {
+            console.log("complited")
+        });
+        let receivedNewData;
+        return receivedNewData ? BackgroundFetch.Result.NewData : BackgroundFetch.Result.NoData;
+    } catch (error) {
+        return BackgroundFetch.Result.Failed;
+    }
+})
+
+
+async function registerBackgroundFetchAsync() {
+    return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
+        minimumInterval: 30, // 15 minutes
+        stopOnTerminate: false, // android only,
+        startOnBoot: true, // android only
+    });
+}
+
+async function unregisterBackgroundFetchAsync() {
+    return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
+}
 
 class App extends Component {
 
     state = {
         timetable: [],
+    }
+
+    componentDidMount() {
+        // unregisterBackgroundFetchAsync().then(r => console.log(r));
+        registerBackgroundFetchAsync().then(r => console.log(r));
     }
 
     constructor(props) {

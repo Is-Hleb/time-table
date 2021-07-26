@@ -13,7 +13,7 @@ export const getLinks = async () => {
     cheerioDataH2 = $('h2.entry-title')
     AllData.push(cheerioDataH2);
 
-    for (let i = 2; i <= 4; i++) {
+    for (let i = 2; i <= 1; i++) {
         let url = `http://bgaek.by/category/%d1%80%d0%b0%d1%81%d0%bf%d0%b8%d1%81%d0%b0%d0%bd%d0%b8%d0%b5/buh-otdel/page/${i}/`;
         htmlString = await getPage(url);
         $ = cheerio.load(htmlString)
@@ -48,7 +48,7 @@ export const getLinks = async () => {
                     break;
             }
 
-            let date = $(this).text().split(' ').filter(value => (value.split('.').length === 3))[0]
+            let date = $(this).text().split(' ').filter(value => (value.split('.').length === 3))[0] ?? "Не выбрано";
             outputData.push({
                 href: tagA.attr('href'),
                 dayOfWeek,
