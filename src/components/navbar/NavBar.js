@@ -24,6 +24,7 @@ class NavBar extends Component {
             this.setState({[url]: value})
             this.props.onStateChange(value);
         } catch (e) {
+            console.log("Here")
             console.log(e.message)
         }
     }

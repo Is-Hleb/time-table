@@ -1,6 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system';
-
 const PATH_TO_LINKS_KEYS = FileSystem.documentDirectory + 'keys.json';
 
 export const getPage = async (url) => {
@@ -11,6 +9,8 @@ export const getPage = async (url) => {
         await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'pages');
         console.log(e.message)
     }
+
+    console.log(keys)
 
     if(url in keys) {
 

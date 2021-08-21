@@ -15,7 +15,7 @@ const BACKGROUND_FETCH_TASK = 'background_parse_data';
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, () => {
     try {
         uploadLinks().then(() => {
-            console.log("complited")
+            console.log("completed")
         });
         let receivedNewData;
         return receivedNewData ? BackgroundFetch.Result.NewData : BackgroundFetch.Result.NoData;
@@ -45,7 +45,7 @@ class App extends Component {
 
     componentDidMount() {
         // unregisterBackgroundFetchAsync().then(r => console.log(r));
-        registerBackgroundFetchAsync().then(r => console.log(r));
+        registerBackgroundFetchAsync().then(r => console.log(1));
     }
 
     constructor(props) {

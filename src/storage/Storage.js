@@ -33,11 +33,8 @@ export const uploadLinks = async () => {
 }
 
 export const getTimetableByUrl = async url => {
-    //if (!await AsyncStorage.getItem(url)) {
     let data = JSON.stringify(await ParseTimetable(url));
-    //await AsyncStorage.setItem(url, loaded_timetable);
-    //}
-    //let data = await AsyncStorage.getItem(url);
+    console.log("data:" + data)
     return JSON.parse(data)
 }
 
