@@ -6,7 +6,7 @@ const cheerio = require('cheerio-without-node-native')
 const getKeys = async () => {
     try {
         let data = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'timetable/keys.json');
-        console.log(data)
+        // console.log(data)
         return JSON.parse(data);
     } catch (e) {
         try {
@@ -22,8 +22,8 @@ const getKeys = async () => {
 const loadTimeTable = async (timetable_url) => {
 
     const keys = await getKeys()
-    console.log("keys")
-    console.log(keys)
+    // console.log("keys")
+    // console.log(keys)
     if (timetable_url in keys) {
         let data = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'timetable/' + keys[timetable_url] + '.json');
         return JSON.parse(data)

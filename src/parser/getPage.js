@@ -7,7 +7,7 @@ export const getPage = async (url) => {
         keys = JSON.parse(await FileSystem.readAsStringAsync(PATH_TO_LINKS_KEYS));
     } catch (e) {
         await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'pages');
-        console.log(e.message)
+        // console.log(e.message)
     }
 
     console.log(keys)
@@ -21,11 +21,11 @@ export const getPage = async (url) => {
     const data = await fetch(url);
     let text = await data.text()
 
-    console.log({[url] : key})
+    // console.log({[url] : key})
 
     keys[url] = key;
     Object.assign(keys, {[url]: key});
-    console.log(keys);
+    // console.log(keys);
 
     await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'pages/' + key + '.txt', text);
     await FileSystem.writeAsStringAsync(PATH_TO_LINKS_KEYS, JSON.stringify(Object.assign({}, keys)));

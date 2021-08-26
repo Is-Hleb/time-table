@@ -26,15 +26,15 @@ class Timetable extends Component {
         let timetable = this.props.timetable
         let cur_timetable = timetable.filter(item => (Object.keys(item)[0] === group))
 
-        console.log(cur_timetable);
+        // console.log(cur_timetable);
         if (cur_timetable === undefined || !cur_timetable.length) {
             cur_timetable = timetable[0]
-            console.log(cur_timetable)
+           //  console.log(cur_timetable)
             if (!cur_timetable || !cur_timetable.length)
                 return;
-            console.log(group);
+            // console.log(group);
         }
-        console.log(cur_timetable)
+       // console.log(cur_timetable)
         cur_timetable = cur_timetable[0][group]
         let table_data = []
         for (let index = 0; index < cur_timetable.length; index++)

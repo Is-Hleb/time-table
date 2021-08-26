@@ -7,7 +7,8 @@ import {Header} from './src/components/Header'
 import NavBar from "./src/components/navbar/NavBar";
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import {getLinks, uploadLinks} from "./src/storage/Storage";
+import {getLinks, getTimetableByUrl, uploadLinks} from "./src/storage/Storage";
+import Settings from './settings.json'
 
 const config = require('./config.json');
 const BACKGROUND_FETCH_TASK = 'background_parse_data';
@@ -43,16 +44,30 @@ class App extends Component {
         timetable: [],
     }
 
-    componentDidMount() {
+    async componentDidMount() : Promise {
         // unregisterBackgroundFetchAsync().then(r => console.log(r));
+        console.log("loading Start...")
+        let data = await getLinks()
         registerBackgroundFetchAsync().then(r => console.log(1));
+        for (const item of data) {
+            await getTimetableByUrl(item.href).then()
+        }
     }
 
     constructor(props) {
         super(props);
+
     }
 
     render() {
+        fetch(Settings.ApiLink).then(data => {
+            data.text().then(text => {
+                console.log(text)
+            })
+        }).catch(e => {
+            console.log(e)
+        })
+
         const onNavbarStateChange = (data) => {
             this.setState({timetable: data});
             this.render()
@@ -72,13 +87,14 @@ class App extends Component {
 
 export default App;
 
-const styles = StyleSheet.create({
-    body: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        height: '100%',
-        width: '100%',
-        backgroundColor: theme.colors.backgroundColor,
-    },
-});
+const
+    styles = StyleSheet.create({
+        body: {
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            height: '100%',
+            width: '100%',
+            backgroundColor: theme.colors.backgroundColor,
+        },
+    });

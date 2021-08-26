@@ -4,7 +4,6 @@ import {getTimeTable as ParseTimetable} from "../parser/getTimetable";
 
 const LINKS_JSON_FILE_PATH = FileSystem.documentDirectory + 'links.json';
 
-export const getOldLinks = async () => JSON.parse(await FileSystem.readAsStringAsync(LINKS_JSON_FILE_PATH));
 
 export const getLinks = async () => {
     let links;
@@ -34,7 +33,7 @@ export const uploadLinks = async () => {
 
 export const getTimetableByUrl = async url => {
     let data = JSON.stringify(await ParseTimetable(url));
-    console.log("data:" + data)
+    // console.log("data:" + data)
     return JSON.parse(data)
 }
 
