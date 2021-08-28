@@ -1,13 +1,18 @@
 {
   "expo": {
-    "name": "timetable",
-    "slug": "timetable",
-    "version": "1.0.0",
+    "name": "БГАЭК",
+    "slug": "bgaek",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.7.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -19,17 +24,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.is_Gleb.is_hleb",
-      "versionCode": 1
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
-  },
-
+    "description": "Приложение Бобруйского Аграрно-экономического колледжа, под разработкой учащихся 25-П группы Васковича Ивана и Ищенко Глеба"
+  }
 }
