@@ -33,6 +33,7 @@ class PageParser extends Controller
     {
         $finder = $this->getFinder(env("PARSER_PAGES_LINK"));
         $links_elms = $finder->query('//div[@class="read-more"]/a');
+        $data_regex = "/\d{1,2}\.\d{1,2}\.\d{2,4}/";
         $links = [];
         foreach ($links_elms as $link_el) {
             $links[] = $link_el->getAttribute("href");
@@ -41,7 +42,11 @@ class PageParser extends Controller
         foreach ($links as $link) {
             $finder = $this->getFinder($link);
             $tds_html = $finder->query('//tr');
-            $time = $finder->query('//time')[0]->textContent;
+            $time = $finder->query('//h1[@class="entry-title"]')[0]->textContent;
+            $temp = [];
+            preg_match_all($data_regex, $time, $temp);
+            $time = $temp[0][0];
+            // dd($time[0]);
             $timetable[$time] = [];
             $cur_timetable = [];
             $group1 = 0;
