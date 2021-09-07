@@ -29,7 +29,7 @@ class PageParser extends Controller
         return new \DOMXPath($dom);
     }
 
-    public function index(Request $request)
+    public function parse($pages_count)
     {
         $finder = $this->getFinder(env("PARSER_PAGES_LINK"));
         $links_elms = $finder->query('//div[@class="read-more"]/a');
@@ -39,7 +39,8 @@ class PageParser extends Controller
             $links[] = $link_el->getAttribute("href");
         }
         $timetable = [];
-        foreach ($links as $link) {
+        for ($i = 0; $i < $pages_count; $i ++) {
+            $link = $links[$i];
             $finder = $this->getFinder($link);
             $tds_html = $finder->query('//tr');
             $time = $finder->query('//h1[@class="entry-title"]')[0]->textContent;
@@ -84,4 +85,8 @@ class PageParser extends Controller
         }
         return json_encode($timetable, JSON_UNESCAPED_UNICODE);
     }
+}
+
+public function index(Request $request) {
+    return $request->all();
 }

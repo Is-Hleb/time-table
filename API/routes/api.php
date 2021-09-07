@@ -19,6 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', [API\PageParser::class, 'index']);
-
+Route::post('/parse', [API\PageParser::class, 'index']);
 
