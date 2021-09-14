@@ -1,0 +1,5 @@
+{
+  "protocol": "http://",
+  "apiHost": "192.168.100.35",
+  "apiPort": ":8000"
+}

@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class PageParser extends Controller
 {
-    private function getFinder($link): \DOMXPath
+    private static function getFinder($link): \DOMXPath
     {
         $html_string = file_get_contents($link);
-        return $this->getFinderFromString($html_string);
+        return self::getFinderFromString($html_string);
     }
 
-    private function getFinderFromString($html_string): \DOMXPath
+    private static function getFinderFromString($html_string): \DOMXPath
     {
         $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
@@ -22,16 +22,16 @@ class PageParser extends Controller
         return new \DOMXPath($dom);
     }
 
-    private function getFinderFromDomElement($node): \DOMXPath
+    private static function getFinderFromDomElement($node): \DOMXPath
     {
         $dom = new \DOMDocument();
         $dom->loadXML($node->ownerDocument->saveXML($node));
         return new \DOMXPath($dom);
     }
 
-    public function parse($pages_count)
+    public static function parse($pages_count)
     {
-        $finder = $this->getFinder(env("PARSER_PAGES_LINK"));
+        $finder = self::getFinder(env("PARSER_PAGES_LINK"));
         $links_elms = $finder->query('//div[@class="read-more"]/a');
         $data_regex = "/\d{1,2}\.\d{1,2}\.\d{2,4}/";
         $links = [];
@@ -41,7 +41,7 @@ class PageParser extends Controller
         $timetable = [];
         for ($i = 0; $i < $pages_count; $i ++) {
             $link = $links[$i];
-            $finder = $this->getFinder($link);
+            $finder = self::getFinder($link);
             $tds_html = $finder->query('//tr');
             $time = $finder->query('//h1[@class="entry-title"]')[0]->textContent;
             $temp = [];
@@ -53,7 +53,7 @@ class PageParser extends Controller
             $group1 = 0;
             $group2 = 0;
             foreach ($tds_html as $td_html) {
-                $finder = $this->getFinderFromDomElement($td_html);
+                $finder = self::getFinderFromDomElement($td_html);
                 $data = $finder->query('//td');
                 $temp_data = [];
 
@@ -87,6 +87,4 @@ class PageParser extends Controller
     }
 }
 
-public function index(Request $request) {
-    return $request->all();
-}
+

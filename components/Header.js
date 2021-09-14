@@ -9,6 +9,7 @@ import Input from './Input';
 import Tabs from './Tabs';
 import argonTheme from '../constants/Theme';
 
+
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
 
@@ -49,7 +50,9 @@ const SearchButton = ({isWhite, style, navigation}) => (
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.store = props.store;
     this.state = {
+      buttons: this.props.store.getState().readyToShow ? Object.keys(this.props.store.getState()["timetable"]) : [],
       tableHead: ['№', 'Предмет', 'Кабинет'],
       tableData: [
         ['1ч\n(9:15-10:00)', '-', '-'],
@@ -66,6 +69,24 @@ class Header extends React.Component {
       ]
     }
   }
+
+   componentDidMount() {
+     let store = this.store.getState();
+     let unsubscribe = this.store.subscribe(listener)
+     function listener() {
+       if(this.store.getState().readyToShow) {
+         store = this.store.getState()
+         console.log(store)
+       }
+     }
+
+     if(store.readyToShow) {
+       unsubscribe(listener)
+       this.setState((state) => {
+         state.buttons = Object.keys(store["timetable"])
+       })
+     }
+   }
 
   handleLeftPress = () => {
     const { back, navigation } = this.props;
@@ -142,6 +163,7 @@ class Header extends React.Component {
     const { navigation, optionLeft, optionRight } = this.props;
     const state = this.state;
 
+
     return (
         <View>
           <Block row style={styles.options}>
@@ -161,15 +183,19 @@ class Header extends React.Component {
           <ScrollView>
               <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
                 <ScrollView horizontal={true}>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>12.04.21 (ПН)</Button>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>13.04.21 (ВТ)</Button>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>14.04.21 (СР)</Button>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>15.04.21 (ЧТ)</Button>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>16.04.21 (ПТ)</Button>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>17.04.21 (СБ)</Button>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>18.04.21 (ПН)</Button>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>19.04.21 (ВТ)</Button>
-                  <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>20.04.21 (СР)</Button>
+                  {
+                    this.state.buttons.map(item =>
+                        <Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>{item}</Button>
+                    )
+                  }
+                  {/*<Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>13.04.21 (ВТ)</Button>*/}
+                  {/*<Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>14.04.21 (СР)</Button>*/}
+                  {/*<Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>15.04.21 (ЧТ)</Button>*/}
+                  {/*<Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>16.04.21 (ПТ)</Button>*/}
+                  {/*<Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>17.04.21 (СБ)</Button>*/}
+                  {/*<Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>18.04.21 (ПН)</Button>*/}
+                  {/*<Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>19.04.21 (ВТ)</Button>*/}
+                  {/*<Button style={styles.btn} textStyle={{ fontSize: 14, textAlign: 'center' }}>20.04.21 (СР)</Button>*/}
                 </ScrollView>
                 <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
                 <Rows data={state.tableData} textStyle={styles.text}/>
